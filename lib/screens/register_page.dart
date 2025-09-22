@@ -38,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
         MaterialPageRoute(builder: (context) => const LobbyPage()),
       );
 
-      // Opcional: mostrar mensaje
+      
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Registro exitoso")),
       );

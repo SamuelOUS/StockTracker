@@ -1,10 +1,10 @@
-// lib/screens/user_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:my_app/components/user_tile.dart';
 import 'package:my_app/models/user_model.dart';
 import 'package:my_app/providers/user_provider.dart';
-import 'package:my_app/screens/user_search_page.dart';
+
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -22,14 +22,14 @@ class _UserPageState extends State<UserPage> {
     super.initState();
     final provider = Provider.of<UserProvider>(context, listen: false);
 
-    // Cargar usuarios si la lista está vacía
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (provider.users.isEmpty) {
         provider.fetchUsers(limit: _pageSize, skip: 0);
       }
     });
 
-    // Scroll infinito
+    
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 300) {

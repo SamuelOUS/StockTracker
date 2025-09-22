@@ -33,7 +33,7 @@ class LobbyPage extends StatelessWidget {
   }
 
   void _goToLogin(BuildContext context) {
-    Navigator.popUntil(context, (route) => route.isFirst); // vuelve a la primera página
+    Navigator.popUntil(context, (route) => route.isFirst); 
   }
 
   @override
@@ -45,7 +45,7 @@ class LobbyPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Fondo con imagen
+         
           SizedBox.expand(
             child: Image.asset(
               'assets/images/image.png',
@@ -55,7 +55,7 @@ class LobbyPage extends StatelessWidget {
             ),
           ),
 
-          // Contenido principal
+         
           Center(
             child: SingleChildScrollView(
               child: Container(
@@ -155,7 +155,7 @@ class LobbyPage extends StatelessWidget {
             ),
           ),
 
-          // Botón de salida responsive en la esquina inferior derecha
+          
           Positioned(
             bottom: screenHeight * 0.02,
             right: screenWidth * 0.03,

@@ -6,7 +6,7 @@ import 'package:my_app/screens/register_page.dart';
 import 'package:my_app/screens/lobby.dart';
 import 'package:my_app/components/primary_button.dart';
 import 'package:my_app/components/custom_text_field.dart';
-import 'package:my_app/providers/user_provider.dart'; // <-- Importa el provider
+import 'package:my_app/providers/user_provider.dart'; 
 
 void main() {
   runApp(
@@ -121,7 +121,7 @@ class _AuthPageState extends State<AuthPage> {
                   text: "Iniciar sesión",
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // Antes de ir al Lobby, cargamos los usuarios
+                      
                       final userProvider =
                           Provider.of<UserProvider>(context, listen: false);
                       await userProvider.fetchUsers();

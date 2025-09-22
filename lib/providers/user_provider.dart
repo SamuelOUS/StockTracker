@@ -91,7 +91,6 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  /// Eliminar usuario
   Future<void> deleteUser(int id) async {
     try {
       await _repo.deleteUser(id);

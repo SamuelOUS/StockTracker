@@ -17,7 +17,7 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Obtiene el ancho de la pantalla
+    
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return SizedBox(

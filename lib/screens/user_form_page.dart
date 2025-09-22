@@ -24,7 +24,7 @@ class _UserFormPageState extends State<UserFormPage> {
   }
 
   Future<void> _createUser() async {
-    if (!_formKey.currentState!.validate()) return; // valida el formulario
+    if (!_formKey.currentState!.validate()) return; 
 
     setState(() => _isLoading = true);
 
@@ -32,9 +32,9 @@ class _UserFormPageState extends State<UserFormPage> {
       final fullName = _fullNameController.text.trim();
       final email = _emailController.text.trim();
 
-      // Crear usuario localmente en el provider
+      
       final newUser = UserModel(
-        id: DateTime.now().millisecondsSinceEpoch, // id único temporal
+        id: DateTime.now().millisecondsSinceEpoch, 
         fullName: fullName,
         email: email,
       );
@@ -63,7 +63,7 @@ class _UserFormPageState extends State<UserFormPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey, // clave del formulario
+          key: _formKey, 
           child: Column(
             children: [
               TextFormField(
