@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_app/providers/stock_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:my_app/constants/custom_colors.dart';
 import 'package:my_app/screens/register_page.dart';
 import 'package:my_app/screens/lobby.dart';
 import 'package:my_app/components/primary_button.dart';
 import 'package:my_app/components/custom_text_field.dart';
-import 'package:my_app/providers/user_provider.dart'; 
+import 'package:my_app/providers/historical_data_provider.dart';
+
+
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => StockProvider()),
+        ChangeNotifierProvider(create: (_) => HistoricalDataProvider()), // ✅ AÑADIDO
       ],
       child: const MyApp(),
     ),
@@ -26,11 +30,50 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
       home: const AuthPage(),
+      theme: ThemeData(
+        useMaterial3: false,
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Colors.black,
+
+
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.black, 
+          selectionColor: Colors.transparent,
+          selectionHandleColor: Colors.black, 
+        ),
+
+       
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Color(0xFFF5F5F5), 
+          contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          prefixIconColor: Colors.black87,
+          suffixIconColor: Colors.black87,
+          labelStyle: TextStyle(color: Colors.black87),
+          hintStyle: TextStyle(color: Colors.black45),
+        ),
+
+      
+        iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(Colors.black87),
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -62,7 +105,9 @@ class _AuthPageState extends State<AuthPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
+
                 const SizedBox(height: 10),
+
                 const Text(
                   "Inicia sesión para continuar",
                   textAlign: TextAlign.center,
@@ -78,6 +123,7 @@ class _AuthPageState extends State<AuthPage> {
                     FilteringTextInputFormatter.deny(RegExp(r'\s')),
                   ],
                   validator: (value) {
+                    return null;
                     if (value == null || value.isEmpty) {
                       return "El correo es obligatorio";
                     }
@@ -88,7 +134,6 @@ class _AuthPageState extends State<AuthPage> {
                   },
                   onChanged: (value) {
                     print("Correo: $value");
-                    return null;
                   },
                   prefixIcon: const Icon(Icons.email),
                 ),
@@ -100,6 +145,7 @@ class _AuthPageState extends State<AuthPage> {
                   placeholder: "Ingresa tu contraseña",
                   isPassword: true,
                   validator: (value) {
+                    return null;
                     if (value == null || value.isEmpty) {
                       return "La contraseña es obligatoria";
                     }
@@ -110,7 +156,6 @@ class _AuthPageState extends State<AuthPage> {
                   },
                   onChanged: (value) {
                     print("Contraseña: $value");
-                    return null;
                   },
                   prefixIcon: const Icon(Icons.lock),
                 ),
@@ -120,15 +165,17 @@ class _AuthPageState extends State<AuthPage> {
                 PrimaryButton(
                   text: "Iniciar sesión",
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      
-                      final userProvider =
-                          Provider.of<UserProvider>(context, listen: false);
-                      await userProvider.fetchUsers();
+              
+                    if (true) {
+                      final stockProvider =
+                          Provider.of<StockProvider>(context, listen: false);
+                      await stockProvider.fetchTrending();
 
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LobbyPage()),
+                        MaterialPageRoute(
+                          builder: (context) => const LobbyPage(),
+                        ),
                       );
                     }
                   },
@@ -145,16 +192,17 @@ class _AuthPageState extends State<AuthPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const RegisterPage()),
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterPage(),
+                      ),
                     );
                   },
                   child: const Text(
-                    "Registrate",
+                    "Regístrate",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: CustomColors.secondary
-                      
+                      color: CustomColors.secondary,
                     ),
                   ),
                 ),

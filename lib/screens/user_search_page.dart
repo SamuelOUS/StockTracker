@@ -122,39 +122,103 @@ class _UserSearchPageState extends State<UserSearchPage> {
     final isLoading = Provider.of<UserProvider>(context).isLoading;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Buscar Usuarios")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                labelText: "Buscar por nombre o correo",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // --- BOTÓN ARRIBA A LA IZQUIERDA ---
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.menu), // puedes cambiarlo por otro ícono
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Hola 👋')),
+                    );
+                  },
+                ),
               ),
-              onChanged: (value) => setState(() => _searchValue = value),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : _filteredUsers.isEmpty
-                      ? const Center(child: Text("No se encontraron usuarios"))
-                      : ListView.builder(
-                          itemCount: _filteredUsers.length,
-                          itemBuilder: (context, index) {
-                            final user = _filteredUsers[index];
-                            return UserTile(
-                              user: user,
-                              onEdit: () => _editUser(user),
-                              onDelete: () => _deleteUser(user),
-                            );
-                          },
-                        ),
-            ),
-          ],
+
+              const SizedBox(height: 16),
+
+              // --- TÍTULOS CENTRADOS ---
+              const Center(
+                child: Text(
+                  "Discover",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Center(
+                child: Text(
+                  "Take a look at any stocks",
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              // --- BARRA DE BÚSQUEDA ---
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xF3F3F3),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextField(
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                    hintText: "Search",
+                    prefixIcon: Icon(Icons.search),
+                    border: InputBorder.none,
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  ),
+                  onChanged: (value) => setState(() => _searchValue = value),
+                ),
+              ),
+
+              const SizedBox(height: 60),
+
+              // --- TÍTULO DE SECCIÓN ---
+              const Center(
+                child: Text(
+                  "Trending Stocks",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // --- LISTA DE USUARIOS ---
+              Expanded(
+                child: isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : _filteredUsers.isEmpty
+                        ? const Center(
+                            child: Text("No se encontraron usuarios"),
+                          )
+                        : ListView.builder(
+                            itemCount: _filteredUsers.length,
+                            itemBuilder: (context, index) {
+                              final user = _filteredUsers[index];
+                              return UserTile(
+                                user: user,
+                                onEdit: () => _editUser(user),
+                                onDelete: () => _deleteUser(user),
+                              );
+                            },
+                          ),
+              ),
+            ],
+          ),
         ),
       ),
     );

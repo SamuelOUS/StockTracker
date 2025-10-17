@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   CustomTextField({
-    Key? key,
+    super.key,
     required this.label,
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
@@ -14,7 +14,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.inputFormatters,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   String label;
   bool isPassword;
